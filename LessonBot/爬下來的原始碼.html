@@ -1,0 +1,88 @@
+<HTML>
+<!-- script type="text/javascript" src="acpwd.js"></script> -->
+<SCRIPT type="text/javascript" src="../../javascript/jquery.js"></SCRIPT>
+<script language="JavaScript">
+  //  這一段是從學籍系統的登入網頁抄來的 Added 2005/09/13 Nidalap :D~
+  function f_action(field) {
+        popup_ask_passwd=window.open("https://www026198.ccu.edu.tw/academic/lost_passwd.htm", "遺失密碼", "width =600, height =600, scrollbars=yes");
+        popup_ask_passwd.name = "lost_passwd";
+        return true;
+  }
+
+  function f_action_gra(field) {
+        popup_ask_passwd=window.open("https://www026198.ccu.edu.tw/academic/gra/lost_passwd.htm", "遺失密碼", "width =600, height =600, scrollbars=yes");
+        popup_ask_passwd.name = "lost_passwd";
+        return true;
+  }
+
+  /////  點選PC中文版、行動版、英文版以後，透過轉址呼叫自己產生不同畫面
+  $(document).ready(function() {
+    $('#chinese').click(function() {
+          window.top.location = "index.php?e=0&m=0";
+        });
+        $('#english').click(function() {
+          window.top.location = "index.php?e=1";
+        });
+        $('#mobile').click(function() {
+          window.top.location = "index.php?m=1";
+        });
+  })
+
+</SCRIPT>
+
+
+ <HEAD>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
+           <CENTER>
+           <IMG src='../../Graph/mobile/title310px.gif'>
+           <P>
+
+   <TITLE>LOGIN</TITLE>
+ </HEAD>
+  <BODY background="https://kiki.ccu.edu.tw/~ccmisp06/Graph/ccu-sbg.jpg">
+
+  <FONT size=2>
+  <CENTER>
+
+    <FORM name="form1" action="bookmark.php" method=POST>
+  <TABLE border=0 width=100%>
+    <TR>
+          <TD colspan=2>
+            <INPUT type='radio' name='version' id='chinese' value=0 >PC中文版<BR>
+<INPUT type='radio' name='version' id='mobile' value=1 checked='yes'>行動版(beta version)<BR>
+<INPUT type='radio' name='version' id='english' value=1 >English version<BR>
+          </TD>
+        </TR>
+        <TR>
+      <TD><FONT size=2>
+            學號:         </TD>
+      <TD>
+            <!--
+        <!input class="MyInput" onmouseover="this.className='MyInput2';" onmouseout="this.className='MyInput';"  type="text" name="temp_count" size="12" onkeyup="star();" onBlur="key_end();">
+        <!input type="hidden" name="id">
+                -->
+        <INPUT name="id" size=12 maxlength=9>
+      </TD>
+    </TR>
+    <TR>
+      <TD><FONT size=2>
+            密碼:         </TD>
+      <TD>
+        <INPUT size=10 type=password name=password>
+      </TD>
+    </TR>
+    <TR>
+      <TD colspan=2>
+        <FONT size=2>
+        <INPUT type=RADIO name=term checked >
+                  111 學年度第 1 學期<BR><INPUT type='hidden' name='m' value='1'>      </TD>
+    </TR>
+    <TR><TD colspan=2><HR></TD></TR>
+    <TR>
+      <TD colspan=2 ALIGN="center"><INPUT type=submit value="登入系統">&nbsp;&nbsp;&nbsp;
+      <input type='button' value='遺失密碼' name='bt_lost_passwd'onClick='return f_action(this)'></TD></TD>    </TR>
+  </TABLE>
+  </FORM>
+ </BODY>
+</HTML>

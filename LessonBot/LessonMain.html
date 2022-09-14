@@ -1,0 +1,373 @@
+
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+    <html>
+    
+    <SCRIPT language="javascript">
+      function OnlineHelp(anchor)
+      {
+         var link= "../../online_help.html#" + anchor;
+         window.open(link, 'ExplainWindow', 'resizable=yes, width=450,height=400, scrollbars=yes, resizable=yes');
+      }
+    </SCRIPT>
+  
+    <head>
+      <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+      <META HTTP-EQUIV='CACHE-CONTROL' CONTENT='NO-CACHE'>
+      <TITLE>加選分類表</TITLE>
+    </head>
+    <body background='https://kiki.ccu.edu.tw/~ccmisp06/Graph/./ccu-sbg.jpg'>
+    <center>
+        <table width=800 border=0>
+  <tr>
+    <th>姓名: 王宥愷</th>
+    <th>學號: 410410054</th>
+    <th>系所: 資訊工程學系</th>
+    <th>年級: 2</th>
+    <th>班別: B</th>
+  </tr>
+  </table>
+
+      <hr>
+  
+    <SCRIPT type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <SCRIPT language="javascript">
+	  $(document).ready(function(){
+		$("#grade_cge").hide();
+		$("#grade_cge_new").hide();
+		$(".cge_subcate").hide();
+		$("#grade_na").hide();
+
+	    var deptcd = $("input[name=dept]:checked").val();
+		//alert(deptcd);
+		if( deptcd == "I001" ) {					///  如果系所預設是通識（只會發生在使用者BACK）
+		  //$("input[name=dept]").trigger("click");
+		  var use_cge_new_cate = $('#use_cge_new_cate').val();
+		  if( use_cge_new_cate == 0 ) {				///  102學年度前(含)舊生使用通識五領域的選項
+			//alert("ccc");
+			$("#grade_normal").hide();
+			$("#grade_cge").show();
+			$("#grade_cge_new").hide();
+		  }else{									///  103學年度後(含)新生使用通識多個向度選項
+		    //alert("ddd");
+		    $("#grade_normal").hide();
+		    $("#grade_cge").hide();
+			$("#grade_cge_new").show();
+			//alert("eee");
+		  }
+		}
+	
+		
+		//////  依照選通識與否，判斷該顯示「年級」還是「領域」
+		$("input[name=dept]").click(function(){
+			//alert($(this).val());
+			var use_cge_new_cate = $('#use_cge_new_cate').val();
+			//alert(use_cge_new_cate);
+			
+			if($(this).val()=="I001"){					///  如果點了通識課程, 顯示第一~第五領域
+			  if( use_cge_new_cate == 0 ) {				///  102學年度前(含)舊生使用通識五領域的選項
+			    $("#grade_normal").hide();
+			    $("#grade_cge").show();
+				$("#grade_cge_new").hide();
+			  }else{									///  103學年度後(含)新生使用通識多個向度選項
+			    $("#grade_normal").hide();
+			    $("#grade_cge").hide();
+				$("#grade_cge_new").show();
+			  }
+			}else{										///  如果點了一般系所, 顯示一~四年級
+			  $("#grade_normal").show();
+			  $("#grade_cge").hide();
+			  $("#grade_cge_new").hide();
+			}
+			var dept_type = check_dept_type($(this).val());
+			//alert(dept_type);
+			if( dept_type == 2 ) {					    ///  若選擇碩士班，則只可選擇一年級
+			  $("#grade_normal234").hide();
+			  $("#g11").attr("checked", true);
+			}else{										///  若選擇一般系所，可選 1~4 年級
+			  $("#grade_normal234").show();
+			}
+            if( dept_type == 3) {						///  若選擇跨領域學程，則無年級選項
+			  $("#grade_na").show();
+			  $("#grade_normal").hide();
+			  $("#grade_cge").hide();
+			  $("#grade_cge_new").hide();
+			}else{
+			  $("#grade_na").hide();
+			}		
+		})
+		$(".cge_cate").click(function(){
+		  var cate = $(this).val();
+		  //alert(cate);
+		  $(".cge_subcate").hide();
+		  $("#cge_subcate" + cate).show();
+		});
+
+		//////  設定 1~4 年級與 1~4 領域的選項 checked 關聯(這樣寫很笨我知道)
+		$("#g11").click(function() { $("#g21").attr("checked", true); })
+		$("#g12").click(function() { $("#g22").attr("checked", true); })
+		$("#g13").click(function() { $("#g23").attr("checked", true); })
+		$("#g14").click(function() { $("#g24").attr("checked", true); })
+		$("#g21").click(function() { $("#g11").attr("checked", true); })
+		$("#g22").click(function() { $("#g12").attr("checked", true); })
+		$("#g23").click(function() { $("#g13").attr("checked", true); })
+		$("#g24").click(function() { $("#g14").attr("checked", true); })
+	  })
+	  ////////////////////////////////////////////////////////////////////////////////////////
+      /////  判斷系所類別
+	  function check_dept_type(id) 
+	  {
+	    var len = id.length;
+//		alert("hehe");
+		
+		if( len == 2 )  return 3; 						///  跨領域學程
+	    var a = id.substring(0,1);
+		var b = id.substring(3);
+        aa = Number(a);
+		bb = Number(b);
+        if( (a>=1) && (aa<=7) && (bb==6) )  {			///  碩士班
+		  return 2;
+		}else{											///  學士班
+		  return 1;
+		}
+	  }
+
+	</SCRIPT>
+
+	<br>
+    <form action="Add_Course01.cgi" method="post" id=form1>
+    <input type=hidden name="session_id" value="OFspVvbsyEIey2CAA7JW8wtJFRpwTGVdY648">
+	<input type=hidden name="use_cge_new_cate" id="use_cge_new_cate" value=1>
+    <input type=hidden name="page" value=0>
+	<input type=hidden name=e value=0>
+    <table border=0 width=85%>
+    <tr>
+      <th bgcolor=pink> 年級</th>
+      <td>
+	    <DIV id="grade_normal">
+		  <input type=radio name=grade id=g11 value=1 checked>一年級
+ 	      <SPAN id="grade_normal234">
+		    <input type=radio name=grade id=g12 value=2>二年級
+            <input type=radio name=grade id=g13 value=3>三年級
+            <input type=radio name=grade id=g14 value=4>四年級
+		  </SPAN>
+	  
+		</DIV>
+		<DIV id="grade_cge">
+		  <input type=radio name=grade2 id=g21 value=1 checked>第一領域
+ 	      <input type=radio name=grade2 id=g22 value=2>第二、五領域
+          <input type=radio name=grade2 id=g23 value=3>第三領域
+          <input type=radio name=grade2 id=g24 value=4>第四領域
+		</DIV>
+		<DIV id="grade_cge_new">
+<INPUT type=radio name=cge_cate class=cge_cate 
+					 id=cge_cate1 value=1>基礎通識
+<INPUT type=radio name=cge_cate class=cge_cate 
+					 id=cge_cate2 value=2>博雅通識
+<BR>
+<SPAN class=cge_subcate id=cge_subcate1>
+<INPUT type=radio  name=cge_subcate value=1>1. 中國語文知識與應用
+<INPUT type=radio  name=cge_subcate value=2>2. 英文能力訓練
+<INPUT type=radio  name=cge_subcate value=3>3. 資訊能力課程
+<INPUT type=radio  name=cge_subcate value=4>4. 基礎概論課程
+</SPAN>
+<SPAN class=cge_subcate id=cge_subcate2>
+<INPUT type=radio  name=cge_subcate value=0>0. 跨向度課程
+<INPUT type=radio  name=cge_subcate value=1>1. 藝術與美學
+<INPUT type=radio  name=cge_subcate value=2>2. 能源、環境與生態
+<INPUT type=radio  name=cge_subcate value=3>3. 人文思維與生命探索
+<BR><INPUT type=radio  name=cge_subcate value=4>4. 公民與社會參與
+<INPUT type=radio  name=cge_subcate value=5>5. 經濟與國際脈動
+<INPUT type=radio  name=cge_subcate value=6>6. 自然科學與技術
+</SPAN>
+
+		</DIV>
+		<DIV id="grade_na">
+		    (無選項)
+		</DIV>
+	  </td>
+    </tr>
+    <tr>
+    <th bgcolor=pink>系所</th>
+    <td colspan=6><table width=100% border=0>
+	<tr><th bgcolor=#99ffff width=10%>文學院</th>
+       <th bgcolor=#99ffff width=10%>理學院</th>
+       <th bgcolor=#99ffff width=10%>社會科學院</th>
+       <th bgcolor=#99ffff width=10%>工學院</th>
+       <th bgcolor=#99ffff width=10%>管理學院</th>
+       <th bgcolor=#99ffff width=10%>法律學院</th>
+       <th bgcolor=#99ffff width=10%>教育學院</th>
+       <th bgcolor=#99ffff width=10%>其他</th>
+       <th bgcolor=#99ffff width=15%>跨領域學程</th>
+   </tr>
+<tr>
+    <td valign=top><FONT size=2><input type=radio name='dept' value='1014'  ><SPAN title='文學院學士班'>文學院學士班</SPAN><br>
+<input type=radio name='dept' value='1016'  ><SPAN title='文學院碩士班'>文學院碩士班</SPAN><br>
+<input type=radio name='dept' value='1104'  ><SPAN title='中國文學系'>中文系</SPAN><br>
+<input type=radio name='dept' value='1106'  ><SPAN title='中國文學研究所'>中文所</SPAN><br>
+<input type=radio name='dept' value='1154'  ><SPAN title='外國語文學系'>外文系</SPAN><br>
+<input type=radio name='dept' value='1156'  ><SPAN title='外國語文研究所'>外文所</SPAN><br>
+<input type=radio name='dept' value='1204'  ><SPAN title='歷史學系'>歷史系</SPAN><br>
+<input type=radio name='dept' value='1206'  ><SPAN title='歷史研究所'>歷史所</SPAN><br>
+<input type=radio name='dept' value='1254'  ><SPAN title='哲學系'>哲學系</SPAN><br>
+<input type=radio name='dept' value='1256'  ><SPAN title='哲學研究所'>哲學所</SPAN><br>
+<input type=radio name='dept' value='1306'  ><SPAN title='語言學研究所'>語言所</SPAN><br>
+<input type=radio name='dept' value='1316'  ><SPAN title='語言學研究所碩士班語言學組'>語言所語言學組</SPAN><br>
+<input type=radio name='dept' value='1326'  ><SPAN title='語言學研究所碩士班華語教學研究組'>語言所華語教學研究組</SPAN><br>
+<input type=radio name='dept' value='1366'  ><SPAN title='英語教學研究所'>英語教學所</SPAN><br>
+<input type=radio name='dept' value='1416'  ><SPAN title='台灣文學與創意應用研究所'>台文創應所</SPAN><br>
+</td>
+    <td valign=top><FONT size=2><input type=radio name='dept' value='2014'  ><SPAN title='理學院學士班'>理學院學士班</SPAN><br>
+<input type=radio name='dept' value='2016'  ><SPAN title='理學院碩士班'>理學院碩士班</SPAN><br>
+<input type=radio name='dept' value='2104'  ><SPAN title='數學系'>數學系</SPAN><br>
+<input type=radio name='dept' value='2106'  ><SPAN title='應用數學研究所'>應數所</SPAN><br>
+<input type=radio name='dept' value='2156'  ><SPAN title='地震研究所'>地震所</SPAN><br>
+<input type=radio name='dept' value='2176'  ><SPAN title='地球與環境科學系地震學暨地球與環境科學博士班'>地環系地震學暨地球與環境科學博士</SPAN><br>
+<input type=radio name='dept' value='2204'  ><SPAN title='物理學系'>物理系</SPAN><br>
+<input type=radio name='dept' value='2206'  ><SPAN title='物理研究所'>物理所</SPAN><br>
+<input type=radio name='dept' value='2316'  ><SPAN title='統計科學研究所'>統科所</SPAN><br>
+<input type=radio name='dept' value='2354'  ><SPAN title='地球與環境科學系'>地環系</SPAN><br>
+<input type=radio name='dept' value='2386'  ><SPAN title='地球與環境科學系碩士班'>地環所</SPAN><br>
+<input type=radio name='dept' value='2406'  ><SPAN title='數學研究所'>數學所</SPAN><br>
+<input type=radio name='dept' value='2456'  ><SPAN title='分子生物研究所'>分子生物所</SPAN><br>
+<input type=radio name='dept' value='2574'  ><SPAN title='生物醫學科學系'>生醫系</SPAN><br>
+<input type=radio name='dept' value='2556'  ><SPAN title='生物醫學研究所'>生醫所</SPAN><br>
+<input type=radio name='dept' value='2604'  ><SPAN title='化學暨生物化學系'>化暨生化系</SPAN><br>
+<input type=radio name='dept' value='2606'  ><SPAN title='化學暨生物化學研究所'>化暨生化所</SPAN><br>
+<input type=radio name='dept' value='2706'  ><SPAN title='跨領域科學國際博士學位學程'>跨領域科學國際博士學位學程</SPAN><br>
+</td>
+    <td valign=top><FONT size=2><input type=radio name='dept' value='3014'  ><SPAN title='社會科學院學士班'>社會科學院學士班</SPAN><br>
+<input type=radio name='dept' value='3016'  ><SPAN title='社會科學院碩士班'>社會科學院碩士班</SPAN><br>
+<input type=radio name='dept' value='3104'  ><SPAN title='社會福利學系'>社福系</SPAN><br>
+<input type=radio name='dept' value='3106'  ><SPAN title='社會福利研究所'>社福所</SPAN><br>
+<input type=radio name='dept' value='3154'  ><SPAN title='心理學系'>心理系</SPAN><br>
+<input type=radio name='dept' value='3156'  ><SPAN title='心理學研究所'>心理所</SPAN><br>
+<input type=radio name='dept' value='3204'  ><SPAN title='勞工關係學系'>勞工系</SPAN><br>
+<input type=radio name='dept' value='3206'  ><SPAN title='勞工研究所'>勞工所</SPAN><br>
+<input type=radio name='dept' value='3304'  ><SPAN title='政治學系'>政治系</SPAN><br>
+<input type=radio name='dept' value='3306'  ><SPAN title='政治學研究所'>政治所</SPAN><br>
+<input type=radio name='dept' value='3354'  ><SPAN title='傳播學系'>傳播系</SPAN><br>
+<input type=radio name='dept' value='3356'  ><SPAN title='電訊傳播研究所'>電傳所</SPAN><br>
+<input type=radio name='dept' value='3416'  ><SPAN title='戰略暨國際事務研究所'>戰略所</SPAN><br>
+<input type=radio name='dept' value='3656'  ><SPAN title='臨床心理學研究所'>臨床心理所</SPAN><br>
+<input type=radio name='dept' value='3706'  ><SPAN title='認知科學博士學位學程'>認知科學博士學位學程</SPAN><br>
+</td>
+    <td valign=top><FONT size=2><input type=radio name='dept' value='4014'  ><SPAN title='工學院學士班'>工學院學士班</SPAN><br>
+<input type=radio name='dept' value='4016'  ><SPAN title='工學院碩士班'>工學院碩士班</SPAN><br>
+<input type=radio name='dept' value='4104'   CHECKED ><SPAN title='資訊工程學系'><SPAN style='background:YELLOW; color:RED'>資工系</SPAN></SPAN><br>
+<input type=radio name='dept' value='4106'  ><SPAN title='資訊工程研究所'>資工所</SPAN><br>
+<input type=radio name='dept' value='4154'  ><SPAN title='電機工程學系'>電機系</SPAN><br>
+<input type=radio name='dept' value='4156'  ><SPAN title='電機工程研究所'>電機所</SPAN><br>
+<input type=radio name='dept' value='4204'  ><SPAN title='機械工程學系'>機械系</SPAN><br>
+<input type=radio name='dept' value='4206'  ><SPAN title='機械工程研究所'>機械所</SPAN><br>
+<input type=radio name='dept' value='4254'  ><SPAN title='化學工程學系'>化工系</SPAN><br>
+<input type=radio name='dept' value='4256'  ><SPAN title='化學工程研究所'>化工所</SPAN><br>
+<input type=radio name='dept' value='4304'  ><SPAN title='通訊工程學系'>通訊系</SPAN><br>
+<input type=radio name='dept' value='4306'  ><SPAN title='通訊工程研究所'>通訊所</SPAN><br>
+<input type=radio name='dept' value='4416'  ><SPAN title='光機電整合工程研究所'>光機電所</SPAN><br>
+<input type=radio name='dept' value='4456'  ><SPAN title='前瞻製造系統碩/博士學位學程'>前瞻製造系統碩/博士學位學程</SPAN><br>
+<input type=radio name='dept' value='4506'  ><SPAN title='環境智能及智慧系統博士學位學程'>環境智能博士學位學程</SPAN><br>
+</td>
+    <td valign=top><FONT size=2><input type=radio name='dept' value='5014'  ><SPAN title='管理學院學士班'>管理學院學士班</SPAN><br>
+<input type=radio name='dept' value='5016'  ><SPAN title='管理學院碩士班'>管理學院碩士班</SPAN><br>
+<input type=radio name='dept' value='5104'  ><SPAN title='經濟學系'>經濟學系</SPAN><br>
+<input type=radio name='dept' value='5106'  ><SPAN title='國際經濟研究所'>國經所</SPAN><br>
+<input type=radio name='dept' value='5154'  ><SPAN title='財務金融學系'>財金系</SPAN><br>
+<input type=radio name='dept' value='5156'  ><SPAN title='財務金融研究所'>財金所</SPAN><br>
+<input type=radio name='dept' value='5204'  ><SPAN title='企業管理學系'>企管系</SPAN><br>
+<input type=radio name='dept' value='5206'  ><SPAN title='企業管理研究所'>企管所</SPAN><br>
+<input type=radio name='dept' value='5264'  ><SPAN title='會計與資訊科技學系'>會資系</SPAN><br>
+<input type=radio name='dept' value='5266'  ><SPAN title='會計與資訊科技研究所'>會資所</SPAN><br>
+<input type=radio name='dept' value='5304'  ><SPAN title='資訊管理學系'>資管系</SPAN><br>
+<input type=radio name='dept' value='5306'  ><SPAN title='資訊管理研究所'>資管所</SPAN><br>
+<input type=radio name='dept' value='5356'  ><SPAN title='國際財務金融管理碩士學位學程'>國際財管碩士學位學程</SPAN><br>
+<input type=radio name='dept' value='5406'  ><SPAN title='金融科技碩士學位學程'>金融科技碩士學位學程</SPAN><br>
+<input type=radio name='dept' value='5456'  ><SPAN title='企業管理學系行銷與數位分析碩士班'>行銷與數位分析碩士班</SPAN><br>
+<input type=radio name='dept' value='5556'  ><SPAN title='醫療資訊管理研究所'>醫療資訊管理所</SPAN><br>
+</td>
+    <td valign=top><FONT size=2><input type=radio name='dept' value='6014'  ><SPAN title='法學院學士班'>法學院學士班</SPAN><br>
+<input type=radio name='dept' value='6016'  ><SPAN title='法學院碩士班'>法學院碩士班</SPAN><br>
+<input type=radio name='dept' value='6054'  ><SPAN title='法律學系'>法律系</SPAN><br>
+<input type=radio name='dept' value='6056'  ><SPAN title='法律學研究所'>法律所</SPAN><br>
+<input type=radio name='dept' value='6104'  ><SPAN title='法律學系法學組'>法學組</SPAN><br>
+<input type=radio name='dept' value='6204'  ><SPAN title='法律學系法制組'>法制組</SPAN><br>
+<input type=radio name='dept' value='6304'  ><SPAN title='財經法律學系'>財法系</SPAN><br>
+<input type=radio name='dept' value='6306'  ><SPAN title='財經法律學研究所'>財法所</SPAN><br>
+</td>
+    <td valign=top><FONT size=2><input type=radio name='dept' value='7014'  ><SPAN title='教育學院學士班'>教育學院學士班</SPAN><br>
+<input type=radio name='dept' value='7016'  ><SPAN title='教育學院碩士班'>教育學院碩士班</SPAN><br>
+<input type=radio name='dept' value='7104'  ><SPAN title='成人及繼續教育學系'>成教系</SPAN><br>
+<input type=radio name='dept' value='7106'  ><SPAN title='成人及繼續教育研究所'>成教所</SPAN><br>
+<input type=radio name='dept' value='7156'  ><SPAN title='教育學研究所'>教育所</SPAN><br>
+<input type=radio name='dept' value='7254'  ><SPAN title='犯罪防治學系'>犯防系</SPAN><br>
+<input type=radio name='dept' value='7256'  ><SPAN title='犯罪防治研究所'>犯防所</SPAN><br>
+<input type=radio name='dept' value='7306'  ><SPAN title='師資培育中心'>師培中心</SPAN><br>
+<input type=radio name='dept' value='7356'  ><SPAN title='運動與休閒教育研究所'>休閒教育所</SPAN><br>
+<input type=radio name='dept' value='7364'  ><SPAN title='運動競技學系'>運競系</SPAN><br>
+<input type=radio name='dept' value='7406'  ><SPAN title='課程與教學碩士班、課程博士班'>課研所</SPAN><br>
+<input type=radio name='dept' value='7456'  ><SPAN title='教育領導與管理發展國際碩士學位學程'>教育領導碩士學位學程</SPAN><br>
+<input type=radio name='dept' value='7458'  ><SPAN title='教育領導與管理發展國際博士學位學程'>教育領導博士學位學程</SPAN><br>
+<input type=radio name='dept' value='7506'  ><SPAN title='高齡者教育研究所'>高齡教育所</SPAN><br>
+</td>
+    <td valign=top><FONT size=2><input type=radio name='dept' value='9104'  ><SPAN title='紫荊不分系學士學位學程'>紫荊不分系學士學位學程</SPAN><BR>
+<input type=radio name='dept' value='F000'  ><SPAN title='體育中心'>體育中心</SPAN><BR>
+<input type=radio name='dept' value='I001'  ><SPAN title='通識教育中心'>通識中心</SPAN><BR>
+<input type=radio name='dept' value='V000'  ><SPAN title='軍訓'>軍訓</SPAN><BR>
+<input type=radio name='dept' value='Z121'  ><SPAN title='語言中心'>語言中心</SPAN><BR>
+</td>
+    <td valign=top><FONT size=2><input type=radio name=dept value="33">大數據與資料科學學程<BR>
+<input type=radio name=dept value="32">大數據經濟分析學分學程<BR>
+<input type=radio name=dept value="21">應用英外語學程<BR>
+<input type=radio name=dept value="26">管理經濟學程<BR>
+<input type=radio name=dept value="17">功能性基因體學程<BR>
+<input type=radio name=dept value="18">資通安全學程(1091起停辦)<BR>
+<input type=radio name=dept value="30">「戲劇‧創意‧想像」學分學程<BR>
+<input type=radio name=dept value="16">軟體工程學程<BR>
+<input type=radio name=dept value="44">人工智慧暨醫療管理與法律學分學程<BR>
+<input type=radio name=dept value="55">國際菁英學分學程<BR>
+<input type=radio name=dept value="25">數理經濟學程<BR>
+<input type=radio name=dept value="27">國際政治經濟學程<BR>
+<input type=radio name=dept value="28">財務經濟學程<BR>
+<input type=radio name=dept value="57">運動心理科學碩士學分學程<BR>
+<input type=radio name=dept value="40">本土語言與文化實踐學分學程<BR>
+<input type=radio name=dept value="20">環境生物技術學程<BR>
+<input type=radio name=dept value="49">司法心理碩士學分學程<BR>
+<input type=radio name=dept value="24">藝術文物學程<BR>
+<input type=radio name=dept value="31">「科技、傳播與社會」碩士學分學程<BR>
+<input type=radio name=dept value="35">認知科學諮商應用碩士級學分學程<BR>
+<input type=radio name=dept value="11">電子商務學程<BR>
+<input type=radio name=dept value="53">全球治理學分學程<BR>
+<input type=radio name=dept value="48">司法心理學士學分學程<BR>
+<input type=radio name=dept value="22">程式設計學程<BR>
+<input type=radio name=dept value="42">前瞻高齡跨域創新學分學程<BR>
+<input type=radio name=dept value="46">長者人權門診跨域學分學程<BR>
+<input type=radio name=dept value="13">奈米科技學程(1091起停辦)<BR>
+<input type=radio name=dept value="29">華語文教學學程<BR>
+<input type=radio name=dept value="50">循環科技與永續發展學分學程<BR>
+<input type=radio name=dept value="39">創意創新創造創業學分學程<BR>
+<input type=radio name=dept value="36">人工智慧與電腦審計學程<BR>
+<input type=radio name=dept value="51">公部門管理學分學程<BR>
+<input type=radio name=dept value="58">青銀共創跨域學分學程<BR>
+<input type=radio name=dept value="12">認知科學學程(1091起停辦)<BR>
+<input type=radio name=dept value="41">人力資源與組織心理學分學程<BR>
+<input type=radio name=dept value="47">全球跨域全英語學分學程<BR>
+<input type=radio name=dept value="15">組織工程學程<BR>
+<input type=radio name=dept value="52">民意調查與行銷學分學程<BR>
+<input type=radio name=dept value="38">自然科學與材料生物科技全英文學分學程<BR>
+<input type=radio name=dept value="34">金融科技學分學程<BR>
+<input type=radio name=dept value="56">運動心理科學學士學分學程<BR>
+<input type=radio name=dept value="37">司法與高齡者社會工作學士學分學程<BR>
+<input type=radio name=dept value="45">東協與南亞法制學分學程<BR>
+<input type=radio name=dept value="43">財經法律國際商務法全英語學分學程<BR>
+<input type=radio name=dept value="54">社會正義學分學程<BR>
+</td>
+</tr>
+   </table>
+</td>
+    </tr>
+    </table>
+	<INPUT type=hidden name="use_cge_new_cate" id="use_cge_new_cate" value=$use_cge_new_cate>
+    <input type=submit value="察看該系所開課資料">
+    </form>
+</center>
+</body>
+</html>

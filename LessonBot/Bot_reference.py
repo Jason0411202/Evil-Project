@@ -12,7 +12,7 @@ if(r.status_code)==200:
     #print(r.text)
     soup = BeautifulSoup(r.text, 'html.parser')
     print(soup)
-    """
+    
     new_anime=soup.select_one('.timeline-ver > .newanime-block')
     anime_block=new_anime.select('.anime-block')
     for i in anime_block:
@@ -31,7 +31,6 @@ if(r.status_code)==200:
         print('觀看連結 : https://ani.gamer.com.tw/%s'%anime_herf)
 
         print('')
-    """
 else:
     print('Fail,status_code=%d'%r.status_code)
 
